@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy:     #071528;
+  --navy-2:   #0D2140;
+  --navy-3:   #163356;
+  --slate:    #3A5270;
+  --steel:    #6B8BA4;
+  --mist:     #D8E4EE;
+  --fog:      #EDF2F7;
+  --white:    #FFFFFF;
+  --gold:     #C6A84A;
+  --gold-lt:  #E2CC85;
+  --cyan:     #1FB8D4;
+  --body-bg:  #F5F8FB;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--body-bg);
+  color: var(--navy);
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono text-[0.68rem] font-medium tracking-[0.18em] uppercase text-cyan-finis mb-4;
+  }
+
+  .section-heading {
+    @apply font-serif text-4xl text-navy font-bold leading-tight mb-5;
+  }
+
+  .section-sub {
+    @apply text-base text-slate font-light leading-relaxed mb-12 max-w-xl;
+  }
+
+  .btn-primary {
+    @apply bg-cyan-finis text-navy font-semibold text-sm px-8 py-3 rounded-sm 
+           hover:opacity-85 transition-opacity duration-200 inline-block;
+  }
+
+  .btn-ghost {
+    @apply border border-white/20 text-white/75 font-medium text-sm px-8 py-3 
+           rounded-sm hover:border-white/50 transition-colors duration-200 inline-block;
+  }
+
+  .btn-navy {
+    @apply bg-navy text-white font-semibold text-sm px-8 py-3 rounded-sm 
+           hover:bg-navy-3 transition-colors duration-200 inline-block;
+  }
+
+  .cap-card {
+    @apply bg-white p-10 relative border-t-2 border-t-transparent 
+           hover:border-t-cyan-finis transition-all duration-200;
+  }
+
+  .cap-number {
+    @apply font-mono text-[0.65rem] font-medium text-cyan-finis tracking-[0.1em] mb-5;
+  }
+
+  .tag {
+    @apply font-mono text-[0.62rem] bg-fog text-steel px-2 py-0.5 rounded-sm tracking-wide;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--fog); }
+::-webkit-scrollbar-thumb { background: var(--mist); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--steel); }
+
+/* Animations */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.animate-pulse-dot { animation: pulse-dot 2s infinite; }
+.animate-blink { animation: blink 1.1s step-end infinite; }
