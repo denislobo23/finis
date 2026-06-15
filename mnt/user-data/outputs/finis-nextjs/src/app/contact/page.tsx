@@ -5,32 +5,7 @@ import { useState } from 'react'
 import { Mail, MapPin, Building2, Globe } from 'lucide-react'
 
 export default function ContactPage() {
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setStatus('submitting')
-
-    const form = e.currentTarget
-    const data = new FormData(form)
-
-    try {
-      const res = await fetch('https://formspree.io/f/xeewvyyl', {
-        method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' },
-      })
-
-      if (res.ok) {
-        setStatus('success')
-        form.reset()
-      } else {
-        setStatus('error')
-      }
-    } catch {
-      setStatus('error')
-    }
-  }
+  const [sent, setSent] = useState(false)
 
   return (
     <>
@@ -42,7 +17,7 @@ export default function ContactPage() {
             Start with a process intelligence session
           </h1>
           <p className="text-white/40 font-light text-lg leading-relaxed">
-            In 90 minutes, we will map your highest-friction process, identify where AI can intervene, and give you a quantified estimate of what is recoverable. No obligation. Real findings.
+            In 90 minutes, we'll map your highest-friction process, identify where AI can intervene, and give you a quantified estimate of what's recoverable. No obligation. Real findings.
           </p>
         </div>
       </section>
@@ -50,6 +25,7 @@ export default function ContactPage() {
       <section className="bg-white px-[5%] py-24">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.6fr] gap-20">
 
+          {/* Left */}
           <div>
             <h2 className="font-serif text-2xl text-navy font-bold mb-2">Get in touch</h2>
             <p className="text-sm text-slate font-light mb-10 leading-relaxed">We work with businesses across Australia remotely and on-site in Melbourne and surrounding regions.</p>
@@ -78,49 +54,50 @@ export default function ContactPage() {
             </div>
           </div>
 
+          {/* Form */}
           <div className="bg-white border border-mist rounded p-10">
-            {status === 'success' ? (
+            {sent ? (
               <div className="text-center py-12">
                 <div className="w-14 h-14 bg-cyan-finis/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-cyan-finis text-2xl">✓</span>
                 </div>
                 <h3 className="font-serif text-xl text-navy font-bold mb-2">Message received</h3>
-                <p className="text-sm text-slate font-light">We will be in touch within one business day.</p>
+                <p className="text-sm text-slate font-light">We'll be in touch within one business day.</p>
               </div>
             ) : (
               <>
                 <h3 className="font-serif text-xl text-navy font-bold mb-1">Request a Discovery Session</h3>
                 <p className="text-sm text-slate font-light mb-8">We respond within one business day.</p>
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                <div className="flex flex-col gap-5">
                   <div className="grid grid-cols-2 gap-5">
                     <div className="flex flex-col gap-1.5">
                       <label className="font-mono text-[0.62rem] font-medium tracking-[0.1em] uppercase text-steel">First Name</label>
-                      <input name="firstName" type="text" required placeholder="First name" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors" />
+                      <input type="text" placeholder="First name" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors" />
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label className="font-mono text-[0.62rem] font-medium tracking-[0.1em] uppercase text-steel">Last Name</label>
-                      <input name="lastName" type="text" required placeholder="Last name" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors" />
+                      <input type="text" placeholder="Last name" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors" />
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-1.5">
                     <label className="font-mono text-[0.62rem] font-medium tracking-[0.1em] uppercase text-steel">Business Email</label>
-                    <input name="email" type="email" required placeholder="you@yourcompany.com.au" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors" />
+                    <input type="email" placeholder="you@yourcompany.com.au" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors" />
                   </div>
 
                   <div className="grid grid-cols-2 gap-5">
                     <div className="flex flex-col gap-1.5">
                       <label className="font-mono text-[0.62rem] font-medium tracking-[0.1em] uppercase text-steel">Organisation</label>
-                      <input name="organisation" type="text" placeholder="Company name" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors" />
+                      <input type="text" placeholder="Company name" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors" />
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label className="font-mono text-[0.62rem] font-medium tracking-[0.1em] uppercase text-steel">Team Size</label>
-                      <select name="teamSize" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors">
+                      <select className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors">
                         <option value="">Select size</option>
-                        <option>1-10 employees</option>
-                        <option>11-50 employees</option>
-                        <option>51-200 employees</option>
+                        <option>1–10 employees</option>
+                        <option>11–50 employees</option>
+                        <option>51–200 employees</option>
                         <option>200+ employees</option>
                       </select>
                     </div>
@@ -128,7 +105,7 @@ export default function ContactPage() {
 
                   <div className="flex flex-col gap-1.5">
                     <label className="font-mono text-[0.62rem] font-medium tracking-[0.1em] uppercase text-steel">Primary Challenge</label>
-                    <select name="challenge" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors">
+                    <select className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors">
                       <option value="">Select focus area</option>
                       <option>AI Process Modelling</option>
                       <option>Workflow Redesign</option>
@@ -142,21 +119,13 @@ export default function ContactPage() {
 
                   <div className="flex flex-col gap-1.5">
                     <label className="font-mono text-[0.62rem] font-medium tracking-[0.1em] uppercase text-steel">Describe your situation</label>
-                    <textarea name="message" rows={4} placeholder="What is the process or execution challenge you are trying to solve?" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors resize-y" />
+                    <textarea rows={4} placeholder="What's the process or execution challenge you're trying to solve?" className="border-[1.5px] border-mist rounded-sm px-4 py-3 text-[0.875rem] text-navy bg-fog focus:border-cyan-finis focus:bg-white outline-none transition-colors resize-y" />
                   </div>
 
-                  {status === 'error' && (
-                    <p className="text-red-500 text-sm">Something went wrong. Please try again or email us directly at info@finis.com.au</p>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={status === 'submitting'}
-                    className="w-full bg-navy text-white font-semibold text-sm py-4 rounded-sm hover:bg-navy-3 transition-colors disabled:opacity-60"
-                  >
-                    {status === 'submitting' ? 'Sending...' : 'Request Discovery Session →'}
+                  <button onClick={() => setSent(true)} className="w-full bg-navy text-white font-semibold text-sm py-4 rounded-sm hover:bg-navy-3 transition-colors">
+                    Request Discovery Session →
                   </button>
-                </form>
+                </div>
               </>
             )}
           </div>
