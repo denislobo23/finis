@@ -5,7 +5,7 @@ const values = [
   { code: 'E', title: 'Evidence over opinion', desc: 'We model before we recommend. Every engagement starts with data, not assumptions.' },
   { code: 'O', title: 'Outcomes over outputs', desc: 'We measure what changes, not what gets delivered. The finish line is the only metric.' },
   { code: 'P', title: 'Practical over theoretical', desc: 'Every model is tested against organisational reality before we ask anyone to change anything.' },
-  { code: 'H', title: 'Honest over comfortable', desc: 'We tell you what your business needs to hear, even when it\'s not what you expected.' },
+  { code: 'H', title: 'Honest over comfortable', desc: 'We tell you what your business needs to hear, even when it's not what you expected.' },
 ]
 
 export default function AboutPage() {
